@@ -1089,4 +1089,17 @@ defmodule Krakex do
     opts = [asset: asset, key: key, amount: amount] ++ opts
     @api.private_request(@api.private_client(), "WithdrawInfo", opts)
   end
+
+  @spec withdraw(Client.t(), binary, binary, binary, keyword) :: Krakex.API.response()
+  def withdraw(client \\ @api.private_client(), asset, key, amount, opts \\ [])
+
+  def withdraw(%Client{} = client, asset, key, amount, opts) when is_list(opts) do
+    opts = [asset: asset, key: key, amount: amount] ++ opts
+    @api.private_request(client, "Withdraw", opts)
+  end
+
+  def withdraw(asset, key, amount, opts, []) do
+    opts = [asset: asset, key: key, amount: amount] ++ opts
+    @api.private_request(@api.private_client(), "Withdraw", opts)
+  end
 end
